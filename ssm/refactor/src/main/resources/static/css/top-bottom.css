@@ -1,0 +1,155 @@
+.nav-top{
+    background: #eee;
+    height: 30px;
+    line-height:30px;
+}
+.nav-top .user-info{
+    float: left;
+}
+.nav-top .user-info .link{
+    margin-right: 5px;
+}
+.nav-top .user-info .link-text{
+    margin-right: 5px;
+}
+.nav-top .nav-top-list{
+    float: right;
+}
+.nav-top .user-info .user.login{
+    display: none;
+}
+.nav-top .nav-top-list .nav-top-item{
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.nav-search .logo{
+    position: absolute;
+    left:70px;
+    top:32px;
+    display: block;
+    font-size: 36px;
+    font-weight: bold;
+    color: #215496
+
+
+}
+.nav-search .search-content{
+    padding: 40px 0 30px 250px;
+}
+
+.nav-search .search-content .search-input{
+    width:500px;
+    height:40px;
+    line-height: 40px;
+    font-size:18px;
+    border: 2px solid #215496;
+    outline: none;
+}
+.nav-search .search-content .search-btn{
+    position: absolute;
+    width:120px;
+    color: #f6f6f6;
+    background-color: #215496;
+    height: 40px;
+    font-size: 20px;
+}
+.btn{
+    display:inline-block;
+    padding: 0 20px;
+    height: 44px;
+    line-height: 40px;
+    vertical-align:middle;
+    border:none;
+    background-color: #215496;
+    color: #f6f6f6;
+    font-size:18px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+}
+
+/*CSS RESET */
+*{
+    margin:0;
+    padding:0;
+}
+body{
+    background:#f6f6f6;
+
+}
+li{
+    list-style: none;
+}
+.img1 {
+    display: inline-block;
+    vertical-align: middle;
+}
+label{
+    cursor: pointer;
+}
+/*全局通用样式 */
+/*定宽布局*/
+.w{
+    width: 1080px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+.link{
+    color: #999;
+    cursor: pointer;
+    text-decoration: none;
+
+}
+.link:hover{
+    color: #215496;
+
+}
+
+.link-text{
+    color: #999;
+    text-decoration: none;
+}
+
+/*面包屑导航*/
+.crumb{
+    height: 50px;
+    line-height: 50px;
+    background: #eee;
+    color: #888;
+    font-size: 14px;
+    border-top: 2px solid #215496;
+    margin-bottom: 10px;
+}
+
+/*页面panel*/
+.panel{
+    padding: 10px;
+    margin-bottom:10px ;
+    background: #fff;
+
+
+}
+.panel .panel-title{
+    padding: 10px;
+    color: #666;
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom: 1px solid #eee;
+}
+.panel .panel-body{
+    padding: 10px;
+    overflow: hidden;
+}
+
+
+#Picture_store{
+    background-color: #215496;
+    margin-left: -70px;
+}
+#keyword{
+    margin-left: 57px;
+    margin-right:-2px ;
+}

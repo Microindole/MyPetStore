@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MyPetStore</title>
+</head>
+<style>
+    #test{
+        margin: auto;
+    }
+</style>
+<body>
+<div th:replace="~{common/top}"></div>
+<script>
+    function refreshKaptcha() {
+        const KaptchaImg = document.getElementById('code_img');
+
+        KaptchaImg.src = "/captcha?t=" + new Date().getTime();
+    }
+</script>
+<div id="Content">
+    <div id="Catalog" class="page-wrapper">
+        <div class="wpo-login-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form class="wpo-accountWrapper" action="/account/signon" method="POST">
+                            <div class="wpo-accountInfo">
+                                <div class="wpo-accountInfoHeader">
+                                    <a class="wpo-accountBtn" href="/account/newAccountForm">
+                                        <span class="">Register Now!</span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <img src="../images/login.png">
+                                </div>
+                                <div class="back-home">
+                                    <a class="wpo-accountBtn" href="/catalog/index">
+                                        <span class="">Back To Home</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="wpo-accountForm form-style">
+                                <div class="fromTitle">
+                                    <h2>Login</h2>
+                                    <p>Sign into your pages account</p>
+                                </div>
+                                <div th:if="${loginMsg!=null}">
+                                    <p class="error-msg" th:text="${loginMsg}"></p>
+                                </div>
+                                <div class="row">
+                                    <table id="register_table">
+                                        <div class="col-lg-12 col-md-12 col-12">
+                                            <label>Username:</label>
+                                            <input type="text" name="username" id="username"><br />
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-12">
+                                            <div class="form-group">
+                                                <label>Password:</label>
+                                                <input class="pwd6" type="password" name="password" id="password"><br />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-12">
+                                            <label>VerifyCode:</label>
+                                            <input type="text" placeholder="请输入验证码:" name="code">
+                                            <img id="code_img" th:src="@{'/captcha'}" alt="图片未加载"
+                                                 width="20" height="65" onclick="refreshKaptcha()" style="width:35%;float:left;">
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-12 col-12">
+                                            <input class="wpo-accountBtn" type="submit" name="signon" value="Login"/>
+                                        </div>
+                                    </table>
+                                </div>
+                                <p class="subText">Need a user name and password?<a href="/account/newAccountForm">Register Now!</a><br>
+                                    Are you an administrator?<a href="/admin/login">Click to CMS</a></p>                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{common/bottom}"></div>
+</body>
+</html>
+
+

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>细节</title>
+  <link rel="stylesheet" type="text/css" href="../css/userdetail.css">
+</head>
+<body>
+<div>
+  <h2>用户详情</h2>
+  <p>用户名: <span th:text="${account.username}"></span></p>
+
+  <p>邮箱: <span th:text="${account.email}"></span></p>
+
+  <p>名: <span th:text="${account.firstName}"></span></p>
+
+  <p>姓: <span th:text="${account.lastName}"></span></p>
+
+  <p>身份: <span th:text="${account.status}"></span></p>
+
+  <p>地址1: <span th:text="${account.address1}"></span></p>
+
+  <p>地址2: <span th:text="${account.address2}"></span></p>
+
+  <p>城市: <span th:text="${account.city}"></span></p>
+
+  <p>州: <span th:text="${account.state}"></span></p>
+
+  <p>邮编: <span th:text="${account.zip}"></span></p>
+
+  <p>国家: <span th:text="${account.country}"></span></p>
+
+  <p>电话: <span th:text="${account.phone}"></span></p>
+  <!-- 其他字段... -->
+  <a th:href="@{/account/edits/{id}(id=${account.username})}" class="btn btn-primary">编辑</a>
+  <a th:href="@{/account/accounts}" class="btn btn-primary">返回用户信息</a>
+  <form th:action="@{/account/reset-password}" method="post" style="display:inline">
+    <input type="hidden" name="username" th:value="${account.username}">
+    <button type="submit" class="btn btn-danger">重置密码</button>
+  </form>
+</div>
+</body>
+</html>

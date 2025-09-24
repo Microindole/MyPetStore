@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MyPetStore</title>
+
+</head>
+<body>
+<footer th:fragment="footer">
+    <div id="Footer">
+
+        <div id="PoweredBy">&nbsp<a href="http://www.csu.edu.cn">www.csu.edu.cn</a>
+        </div>
+
+        <div id="Banner">
+
+
+            <label th:if="(${session.account} != null) and (${session.authenticated})">
+                <img th:if="${session.account.bannerOption}"
+                     th:src="${#strings.arraySplit(session.account.bannerName,'&quot;')[1]}">
+            </label>
+
+        </div>
+
+    </div>
+
+    <script src="../js/productAuto.js"></script>
+</footer>
+</body>
+</html>

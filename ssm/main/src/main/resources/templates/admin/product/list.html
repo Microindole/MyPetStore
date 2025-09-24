@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>商品管理</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+    .btn {
+      display: inline-block;
+      padding: 8px 12px;
+      margin: 2px;
+      text-decoration: none;
+      border-radius: 3px;
+      cursor: pointer;
+      color: white;
+    }
+    .btn-primary {
+      background-color: #4CAF50;
+    }
+    .btn-warning {
+      background-color: #ff9800;
+    }
+    .btn-danger {
+      background-color: #f44336;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 5px;
+    }
+    .header-actions {
+      margin-bottom: 20px;
+    }
+    .badge {
+      background-color: #2196F3;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>商品管理</h1>
+
+  <div class="header-actions">
+    <a th:href="@{/admin/products/products/new}" class="btn btn-primary">添加新商品</a>
+    <a th:href="@{/admin/products/categories}" class="btn btn-primary">类别管理</a>
+    <a th:href="@{/admin/products/items}" class="btn btn-primary">商品项管理</a>
+    <a th:href="@{/admin/index}" class="btn btn-primary">返回主页</a>
+  </div>
+
+  <table>
+    <thead>
+    <tr>
+      <th>商品ID</th>
+      <th>类别</th>
+      <th>商品名称</th>
+      <th>商品项数量</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="productVO : ${products}">
+      <td th:text="${productVO.product.productId}"></td>
+      <td th:text="${productVO.category.name}"></td>
+      <td th:text="${productVO.product.name}"></td>
+      <td>
+        <span class="badge" th:text="${productVO.itemCount}"></span>
+      </td>
+      <td class="action-buttons">
+        <a th:href="@{/admin/products/products/edit/{id}(id=${productVO.product.productId})}" class="btn btn-warning">编辑</a>
+        <a th:href="@{/admin/products/products/delete/{id}(id=${productVO.product.productId})}"
+           class="btn btn-danger"
+           onclick="return confirm('确定要删除此商品吗？这将同时删除关联的所有商品项!')">删除</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

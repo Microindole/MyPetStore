@@ -1,0 +1,141 @@
+/* 修改 editAccount-container 样式 */
+.editAccount-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background-color: #f9f9f9; /* 背景颜色 */
+    padding: 20px;
+}
+
+/* 表单样式 */
+.editAccount-form {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 600px; /* 表单宽度 */
+    width: 100%;
+}
+
+/* 表单标题样式 */
+.editAccount-form h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 12px; /* 减少标题与表单的间距 */
+    text-align: center;
+}
+
+/* 表单组样式 */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px; /* 减少表单项之间的间距 */
+}
+
+/* 表单组行样式 */
+.form-group-row {
+    display: flex;
+    gap: 16px; /* 控制同一行表单项之间的间距 */
+}
+
+.form-group-row .form-group {
+    flex: 1; /* 让表单项均分宽度 */
+}
+
+/* 标签样式 */
+.form-group label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* 输入框和下拉框样式 */
+.form-group input,
+.form-group select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+/* 输入框和下拉框聚焦样式 */
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #007bff;
+}
+
+/* 按钮样式 */
+.editAccount-button {
+    padding: 12px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    margin-top: 12px; /* 减少按钮与表单的间距 */
+}
+
+/* 按钮悬停样式 */
+.editAccount-button:hover {
+    background-color: #0056b3;
+}
+
+/* 复选框样式 */
+.form-group.checkbox-group {
+    display: flex;
+    align-items: center; /* 确保复选框和标题垂直居中对齐 */
+    gap: 10px; /* 增加复选框和标题之间的间距 */
+    margin-bottom: 15px;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* 控制复选框和文本之间的间距 */
+    margin-bottom: 8px; /* 控制每组之间的间距 */
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin: 0; /* 去除默认的外边距 */
+}
+
+/* 只读输入框样式 */
+.readonly-input {
+    background-color: #f5f5f5; /* 设置背景颜色为浅灰色，表示不可编辑 */
+    border: 1px solid #ddd; /* 边框颜色更淡 */
+    color: #666; /* 文本颜色更浅 */
+    cursor: not-allowed; /* 鼠标悬停时显示不可操作的指针 */
+}
+
+/* 表单头部样式 */
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+/* 返回按钮样式 */
+.return-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* 返回按钮悬停样式 */
+.return-button:hover {
+    background-color: #0056b3;
+}

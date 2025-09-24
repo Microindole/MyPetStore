@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmation</title>
+</head>
+<body>
+<div th:replace="~{common/top}"></div>
+<div id="BackLink">
+  <a href="catalog/index">Return to Main Menu</a>
+</div>
+
+<div id="Catalog">
+  Thank you, your order has been submitted.
+
+  <table id="register_table">
+    <tr>
+      <th align="center" colspan="2">
+        Order #<span th:text="${order.orderId}"></span>
+
+      </th>
+    </tr>
+    <tr>
+      <th colspan="2">Payment Details</th>
+    </tr>
+    <tr>
+      <td>Card Type:</td>
+
+      <td th:text="${order.cardType}"></td>
+
+    </tr>
+    <tr>
+      <td>Card Number:</td>
+      <td>
+        <span th:text="${order.creditCard}"></span> * Fake number!
+      </td>
+    </tr>
+    <tr>
+      <td>Expiry Date (MM/YYYY):</td>
+      <td th:text="${order.expiryDate}"></td>
+    </tr>
+    <tr>
+      <th colspan="2">Billing Address</th>
+    </tr>
+    <tr>
+      <td>First name:</td>
+
+      <td th:text="${order.billToFirstName}"></td>
+
+    </tr>
+    <tr>
+      <td>Last name:</td>
+
+        <td th:text="${order.billToLastName}"></td>
+
+    </tr>
+    <tr>
+      <td>Address 1:</td>
+      <td th:text="${order.billAddress1}"></td>
+    </tr>
+    <tr>
+      <td>Address 2:</td>
+
+      <td th:text="${order.billAddress2}"></td>
+
+    </tr>
+    <tr>
+      <td>City:</td>
+      <td th:text="${order.billCity}"></td>
+    </tr>
+    <tr>
+      <td>State:</td>
+      <td th:text="${order.billState}"></td>
+    </tr>
+    <tr>
+      <td>Zip:</td>
+      <td th:text="${order.billZip}"></td>
+    </tr>
+    <tr>
+      <td>Country:</td>
+      <td th:text="${order.billCountry}"></td>
+    </tr>
+    <tr>
+      <th colspan="2">Shipping Address</th>
+    </tr>
+    <tr>
+      <td>First name:</td>
+
+      <td th:text="${order.shipToFirstName}"></td>
+
+    </tr>
+    <tr>
+      <td>Last name:</td>
+
+      <td th:text="${order.shipToLastName}"></td>
+
+    </tr>
+    <tr>
+      <td>Address 1:</td>
+      <td th:text="${order.shipAddress1}"></td>
+    </tr>
+    <tr>
+      <td>Address 2:</td>
+      <td th:text="${order.shipAddress2}"></td>
+    </tr>
+    <tr>
+      <td>City:</td>
+      <td th:text="${order.shipCity}"></td>
+    </tr>
+    <tr>
+      <td>State:</td>
+      <td th:text="${order.shipState}"></td>
+    </tr>
+    <tr>
+      <td>Zip:</td>
+      <td th:text="${order.shipZip}"></td>
+    </tr>
+    <tr>
+      <td>Country:</td>
+      <td th:text="${order.shipCountry}"></td>
+    </tr>
+    <tr>
+      <td>Courier:</td>
+      <td th:text="UPS"></td>
+    </tr>
+    <tr>
+      <td>Status:</td>
+         <td th:text="${status}"></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <table>
+          <tr>
+            <th>Item ID</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total Cost</th>
+          </tr>
+
+          <tr th:each="cartItem : ${cartItemList}">
+            <!-- 商品 ID 链接 -->
+            <td>
+              <!-- 生成带有 itemId 参数的链接，链接文本为商品 ID -->
+              <a th:href="@{/itemForm(itemId=${cartItem.itemVO.itemId})}" th:text="${cartItem.itemVO.itemId}"></a>
+            </td>
+            <!-- 商品描述 -->
+            <td>
+              <!-- 如果 lineItem.item 不为 null，显示商品的属性和产品名称 -->
+              <span th:if="${cartItem.itemVO != null}">
+                <span th:text="${cartItem.itemVO.productName}"></span>
+                <span th:text="${cartItem.itemVO.descriptionText}"></span>
+             </span>
+
+
+            </td>
+            <!-- 商品数量 -->
+            <td th:text="${cartItem.cart.quantity}"></td>
+<!--             商品单价 -->
+            <td th:text="${cartItem.itemVO.listPrice}"></td>
+            <!-- 商品总价 -->
+            <td th:text="${cartItem.cart.quantity * cartItem.itemVO.listPrice}"></td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+
+  </table>
+
+</div>
+
+<div th:replace="~{common/bottom}"></div>
+</body>
+</html>

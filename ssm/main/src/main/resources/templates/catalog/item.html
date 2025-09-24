@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MyPetStore</title>
+</head>
+<body>
+<header th:replace="common/top"></header>
+<div id="Content">
+    <div id="BackLink">
+        <a th:href="'/catalog/viewProduct?productId='+${item.productId}">
+            Return to <label th:text="${item.productId}">Product ID</label>
+        </a>
+    </div>
+
+    <div id="Catalog">
+
+        <table id="register_table">
+            <tr>
+                <td>
+                    <img th:src="'../'+${item.descriptionImage}">
+                    <label th:text="${item.descriptionText}"></label>
+                </td>
+            </tr>
+            <tr>
+                <td><b th:text="${item.itemId}">Item ID</b></td>
+            </tr>
+            <tr>
+                <td><b>
+
+                    <font size="4" th:text="${item.attributes}"> Item Attributes </font>
+                </b></td>
+            </tr>
+            <tr>
+                <td th:text="${item.productName}">Product Name</td>
+            </tr>
+            <tr>
+                <td>
+                    <label th:if="${item.quantity <= 0}">Back ordered.</label>
+                    <label th:if="${item.quantity > 0}" th:text="${item.quantity}+'in stock.'">Quantity in stock.</label>
+                </td>
+            </tr>
+            <tr>
+<!--                <td><fmt:formatNumber value="${sessionScope.item.listPrice}" pattern="$#,##0.00" /></td>-->
+                <td th:text="'$'+${#numbers.formatDecimal(item.listPrice,1,2)}">Item List Price</td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a th:href="'/cart/addItemToCart?workingItemId='+${item.itemId}" class="Button">Add to Cart</a>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+<footer th:replace="common/bottom"></footer>
+</body>
+</html>

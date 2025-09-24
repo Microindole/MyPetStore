@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>PetStore Admin - Item Management</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding-top: 20px;
+      padding-bottom: 40px;
+    }
+    .form-container {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+      padding: 30px;
+      margin-bottom: 30px;
+    }
+    .page-title {
+      color: #28a745;
+      margin-bottom: 25px;
+      border-bottom: 2px solid #e9ecef;
+      padding-bottom: 15px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-label {
+      font-weight: 600;
+      color: #495057;
+    }
+    .form-control:focus {
+      border-color: #80bdff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+      padding: 8px 20px;
+    }
+    .btn-secondary {
+      background-color: #6c757d;
+      border-color: #6c757d;
+      padding: 8px 20px;
+    }
+    .btn-danger {
+      background-color: #dc3545;
+      border-color: #dc3545;
+    }
+    .form-section {
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    .form-section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #343a40;
+      margin-bottom: 15px;
+    }
+    .alert {
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .helper-text {
+      font-size: 0.8rem;
+      color: #6c757d;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="form-container">
+
+        <h2 class="page-title">
+          <i class="fas fa-box me-2"></i>
+          <span th:text="${isEdit} ? 'Edit Item' : 'New Item'">Item Form</span>
+        </h2>
+
+        <div class="alert alert-danger d-flex align-items-center" th:if="${error}" role="alert">
+          <i class="fas fa-exclamation-circle me-2"></i>
+          <div th:text="${error}"></div>
+        </div>
+
+        <div class="alert alert-success d-flex align-items-center" th:if="${success}" role="alert">
+          <i class="fas fa-check-circle me-2"></i>
+          <div th:text="${success}"></div>
+        </div>
+
+        <form th:action="${formAction}" method="post" th:object="${item}" class="needs-validation" novalidate>
+
+          <input type="hidden" th:field="*{itemId}" />
+
+          <div class="form-section">
+            <h5 class="form-section-title"><i class="fas fa-tags me-2"></i>Product Information</h5>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label for="productId" class="form-label">Product:</label>
+                <select id="productId" th:field="*{productId}" class="form-select" required>
+                  <option value="">-- Select Product --</option>
+                  <option th:each="product : ${products}"
+                          th:value="${product.productId}"
+                          th:text="${product.name}"
+                          th:selected="${product.productId == item.productId}"></option>
+                </select>
+                <div class="invalid-feedback">Please select a product.</div>
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label for="supplierId" class="form-label">Supplier:</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fas fa-truck"></i></span>
+                  <input type="number" id="supplierId" th:field="*{supplierId}"
+                         class="form-control" required min="1" value="1" />
+                </div>
+                <div class="helper-text">Enter supplier ID (1 for XYZ Pets, 2 for ABC Pets)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h5 class="form-section-title"><i class="fas fa-dollar-sign me-2"></i>Pricing Information</h5>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label for="listPrice" class="form-label">List Price:</label>
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input type="number" id="listPrice" th:field="*{listPrice}"
+                         class="form-control" step="0.01" min="0.01" required />
+                </div>
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label for="unitCost" class="form-label">Unit Cost:</label>
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input type="number" id="unitCost" th:field="*{unitCost}"
+                         class="form-control" step="0.01" min="0.01" required />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label for="quantity" class="form-label">Inventory Quantity:</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fas fa-cubes"></i></span>
+                  <input type="number" id="quantity" name="quantity"
+                         th:value="${inventory != null ? inventory.quantity : 0}"
+                         class="form-control" required min="0" />
+                </div>
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label for="status" class="form-label">Status:</label>
+                <select id="status" th:field="*{status}" class="form-select" required>
+                  <option value="P">P - Available</option>
+                  <option value="O">O - Out of Stock</option>
+                  <option value="D">D - Discontinued</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h5 class="form-section-title"><i class="fas fa-list-ul me-2"></i>Item Attributes</h5>
+
+            <div class="form-group">
+              <label for="attribute1" class="form-label">Primary Attribute:</label>
+              <input type="text" id="attribute1" th:field="*{attribute1}" class="form-control"
+                     placeholder="e.g. Color, Size, Age" />
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label for="attribute2" class="form-label">Attribute 2:</label>
+                <input type="text" id="attribute2" th:field="*{attribute2}" class="form-control" />
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label for="attribute3" class="form-label">Attribute 3:</label>
+                <input type="text" id="attribute3" th:field="*{attribute3}" class="form-control" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label for="attribute4" class="form-label">Attribute 4:</label>
+                <input type="text" id="attribute4" th:field="*{attribute4}" class="form-control" />
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label for="attribute5" class="form-label">Attribute 5:</label>
+                <input type="text" id="attribute5" th:field="*{attribute5}" class="form-control" />
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between mt-4">
+            <a th:href="@{/admin/products/items}" class="btn btn-secondary">
+              <i class="fas fa-arrow-left me-2"></i>Cancel
+            </a>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save me-2"></i>Save Item
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      var forms = document.getElementsByClassName('needs-validation');
+      Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>
+</body>
+</html>

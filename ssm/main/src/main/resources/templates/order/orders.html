@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MyPetStore Management_订单</title>
+  <style>
+    /* 基础样式 */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* 布局样式 */
+    .container {
+      display: flex;
+      min-height: 100vh;
+      margin-left: 150px;
+      width: 1500px;
+    }
+
+    .sidebar {
+      width: 200px;
+      background: #2f363e;
+      color: white;
+      padding: 15px;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 20px;
+    }
+
+    /* 导航样式 */
+    .navbar {
+      background: #2f363e;
+      padding: 15px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .nav-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+    }
+
+    .nav-item {
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+    .nav-link{
+      color: white;
+    }
+
+    /* 表格样式 */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .data-table th,
+    .data-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background-color: #f2f2f2;
+    }
+
+    /* 按钮样式 */
+    .btn {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #1E9FFF;
+      color: white;
+    }
+
+    .btn-danger {
+      background: #FF5722;
+      color: white;
+    }
+
+    /* 表单样式 */
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 6px 12px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!--  <div class="sidebar">
+      <h3>导航菜单</h3>
+      <ul class="nav-menu">
+        <li>店铺数据</li>
+        <li>商品管理</li>
+        <li>用户管理</li>
+        <li>订单管理</li>
+        <li>日志查看</li>
+      </ul>
+    </div>-->
+
+  <div class="main-content">
+    <div class="navbar">
+      <div>MyPetStore后台管理</div>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a  class="nav-link" th:href="@{/admin/index}">返回首页</a>
+        </li>
+        <!--        <li class="nav-item" th:text="${session.admin}"></li>-->
+      </ul>
+    </div>
+    <!-- 搜索框 -->
+    <div class="form-group">
+      <input style="width: 1500px" type="text" id="searchInput" class="form-control" placeholder="搜索订单...">
+    </div>
+    <table class="data-table">
+      <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>User</th>
+        <th>Date</th>
+        <th>Total Price</th>
+        <th>发货状态</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- 动态数据通过Thymeleaf填充 -->
+      <tr th:each="order:${orders}">
+        <td th:text="${order.orderId}"></td>
+        <td th:text="${order.userId}">hhh</td>
+        <td th:text="${#dates.format(order.orderDate, 'yyyy/MM/dd')}">
+        <td th:text="${#numbers.formatDecimal(order.totalPrice, 1, 2)}"></td>
+        <td>
+          <span th:if="${order.outStatus} == 'P'" class="btn btn-primary">已发货</span>
+          <span th:if="${order.outStatus} == 'NP'" class="btn btn-danger">未发货</span>
+        </td>
+        <td>
+          <button class="btn btn-primary modify-btn" th:attr="data-order-id=${order.orderId}">修改</button>
+          <a th:href="@{'/admin/order/deleteOrder?orderId='+${order.orderId}}"><button class="btn btn-danger">删除</button></a>
+          <a th:if="${order.outStatus} == 'NP'" class="btn btn-primary" th:attr="data-order-id=${order.orderId}" onclick="showShippingModal(this)">发货</a>
+        </td>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div id="shippingModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+  <div style="background: white; margin: 15% auto; padding: 20px; width: 300px; border-radius: 5px; text-align: center;">
+    <h3>填写快递单号</h3>
+    <input type="text" style="width:150px"  id="trackingNumber" class="form-control" placeholder="请输入快递单号">
+    <div style="margin-top: 10px;">
+      <button id="confirmShipping" class="btn btn-primary">确认发货</button>
+      <button id="cancelShipping" class="btn btn-danger">取消</button>
+    </div>
+  </div>
+</div>
+<!-- 修改运送地址模态框 -->
+<div id="addressModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+  <div style="background: white; margin: 10% auto; padding: 20px; width: 400px; border-radius: 5px;">
+    <h3>修改运送地址</h3>
+    <form id="addressForm">
+      <div style="display: flex; align-items: center; margin-bottom: 15px;">
+        <label for="shipAddr1" style="width: 100px; text-align: right; margin-right: 10px;">地址1:</label>
+        <input type="text" id="shipAddr1" required style="width: 200px;">
+      </div>
+      <div style="display: flex; align-items: center; margin-bottom: 15px;">
+        <label for="shipAddr2" style="width: 100px; text-align: right; margin-right: 10px;">地址2:</label>
+        <input type="text" id="shipAddr2" style="width: 200px;">
+      </div>
+      <div style="display: flex; align-items: center; margin-bottom: 15px;">
+        <label for="shipCity" style="width: 100px; text-align: right; margin-right: 10px;">城市:</label>
+        <input type="text" id="shipCity" required style="width: 200px;">
+      </div>
+      <div style="display: flex; align-items: center; margin-bottom: 15px;">
+        <label for="shipState" style="width: 100px; text-align: right; margin-right: 10px;">州/省:</label>
+        <input type="text" id="shipState" required style="width: 200px;">
+      </div>
+      <div style="display: flex; align-items: center; margin-bottom: 15px;">
+        <label for="shipZip" style="width: 100px; text-align: right; margin-right: 10px;">邮政编码:</label>
+        <input type="text" id="shipZip" required style="width: 200px;">
+      </div>
+      <div style="display: flex; align-items: center; margin-bottom: 15px;">
+        <label for="shipCountry" style="width: 100px; text-align: right; margin-right: 10px;">国家:</label>
+        <input type="text" id="shipCountry" required style="width: 200px;">
+      </div>
+      <div style="text-align: center;">
+        <button type="button" id="saveAddress" style="padding: 5px 10px; background: #007bff; color: white; border: none; border-radius: 3px;">保存</button>
+        <button type="button" id="cancelAddress" style="padding: 5px 10px; background: #dc3545; color: white; border: none; border-radius: 3px;">取消</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+  function showShippingModal(link) {
+    const orderId = link.getAttribute('data-order-id');
+    document.getElementById('shippingModal').style.display = 'block';
+    document.getElementById('confirmShipping').setAttribute('data-order-id', orderId);
+  }
+  document.getElementById('cancelShipping').addEventListener('click', function() {
+    document.getElementById('shippingModal').style.display = 'none';
+  });
+  document.getElementById('confirmShipping').addEventListener('click', function() {
+    const orderId = this.getAttribute('data-order-id');
+    //console.log(orderId);
+    fetch('/admin/order/shipOrder', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `orderId=${orderId}`
+    })
+            .then(response => {
+              console.log(response);
+              if (response.ok) {
+                alert('发货成功');
+                location.reload();
+              } else {
+                alert('发货失败，请稍后重试');
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('发货失败');
+            });
+
+    document.getElementById('shippingModal').style.display = 'none';
+  });
+  document.querySelectorAll('.modify-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const orderId = this.getAttribute('data-order-id');
+      document.getElementById('addressModal').style.display = 'block';
+      document.getElementById('saveAddress').setAttribute('data-order-id', orderId);
+    });
+  });
+  document.getElementById('saveAddress').addEventListener('click', function() {
+    const orderId = this.getAttribute('data-order-id');
+    const shipAddress1 = document.getElementById('shipAddr1').value;
+    const shipAddress2 = document.getElementById('shipAddr2').value;
+    const shipCity = document.getElementById('shipCity').value;
+    const shipState = document.getElementById('shipState').value;
+    const shipZip = document.getElementById('shipZip').value;
+    const shipCountry = document.getElementById('shipCountry').value;
+    if (!shipAddress1 || !shipCity || !shipState || !shipZip || !shipCountry) {
+      alert('请填写修改后的地址');
+      return;
+    }
+    fetch('/admin/order/updateAddress', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        orderId: orderId,
+        shipAddress1: shipAddress1,
+        shipAddress2: shipAddress2,
+        shipCity: shipCity,
+        shipState: shipState,
+        shipZip: shipZip,
+        shipCountry: shipCountry
+      })
+    })
+            .then(response => {
+              if (response.ok) {
+                alert('地址修改成功');
+                location.reload();
+              } else {
+                alert('地址修改失败，请稍后重试');
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('地址修改失败');
+            });
+
+    document.getElementById('addressModal').style.display = 'none';
+  });
+  document.getElementById('cancelAddress').addEventListener('click', function() {
+    document.getElementById('addressModal').style.display = 'none';
+  });
+
+
+  //搜索
+  const searchInput = document.getElementById('searchInput');
+  const table = document.querySelector('.data-table');
+  const rows = table.querySelectorAll('tbody tr');
+
+  searchInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+      const searchValue = searchInput.value.trim().toLowerCase();
+      rows.forEach(row => {
+        const orderIdCell = row.querySelector('td:first-child');
+        if (orderIdCell) {
+          const orderId = orderIdCell.textContent.trim().toLowerCase();
+          if (searchValue === '' || orderId.includes(searchValue)) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        }
+      });
+    }
+  });
+</script>
+</body>
+</html>

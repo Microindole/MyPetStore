@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MyPetStore</title>
+
+    <script src="http://kit.fontawesome.com/59c20db7cc.js" crossorigin="anonymous"></script>
+    <link rel="StyleSheet" href="../css/mypetstore.css" type="text/css" media="screen" />
+    <link rel="StyleSheet" href="../css/top-bottom.css" type="text/css" media="screen" />
+    <link rel="StyleSheet" href="../css/mouseEvent.css" type="text/css" media="screen" />
+    <link href="../css/best/themify-icons.css" rel="stylesheet" />
+    <link href="../css/best/flaticon.css" rel="stylesheet" />
+    <link href="../css/best/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/best/animate.css" rel="stylesheet" />
+    <link href="../css/best/owl.carousel.css" rel="stylesheet" />
+    <link href="../css/best/owl.theme.css" rel="stylesheet" />
+    <link href="../css/best/slick.css" rel="stylesheet" />
+    <link href="../css/best/slick-theme.css" rel="stylesheet" />
+    <link href="../css/best/swiper.min.css" rel="stylesheet" />
+    <link href="../css/best/owl.transitions.css" rel="stylesheet" />
+    <link href="../css/best/jquery.fancybox.css" rel="stylesheet" />
+    <link href="../css/best/odometer-theme-default.css" rel="stylesheet" />
+    <link href="../css/best/font-awesome.min.css" rel="stylesheet" />
+    <link href="../css/best/style.css" rel="stylesheet" />
+    <link href="../css/style.default.css" rel="stylesheet">
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<header th:fragment="header">
+    <div id="Header">
+
+        <div class="nav-top">
+            <div class="w">
+
+                <div class="user-info">
+                <span class="user not-login">
+                    <a th:if="${session.account == null}" href="/account/signonForm" class="link">Sign In</a>
+                     <img class="img1" align="middle" src="../images/separator.gif" />
+                    <a th:if="${session.account == null}" href="/account/newAccountForm" class="link">Register</a>
+                </span>
+
+                <span th:if="${session.account != null}" class="user not-login">
+                    <a class="link-text">Welcome here!  <a th:text="${session.account.username}" class="username">username</a>
+                    </a>
+                     <img class="img1" align="middle" src="../images/separator.gif" />
+                    <a href="/account/signOut" class="link">Sign Out</a>
+                    <img class="img1" align="middle" src="../images/separator.gif" />
+                </span>
+            </div>
+            <ul class="nav-top-list">
+                <li class="nav-top-item">
+                    <a href="/cart/viewCart" class="link">
+                        <i class="fa fa-shopping-cart"></i>
+                        Cart
+                    </a>
+                </li>
+                <img class="img1" align="middle" src="../images/separator.gif" />
+
+                         <li th:if="${session.account != null}" class="nav-top-item">
+                            <a th:href="@{/order/listOrder(username=${session.account.username})}" class="link">My Orders</a>
+                         </li>
+                    <img th:if="${session.account != null}" class="img1" align="middle" src="../images/separator.gif" />
+                    <li th:if="${session.account != null}" class="nav-top-item">
+                        <a href="/account/editForm" class="link">My Account</a>
+                    </li>
+                    <img th:if="${session.account != null}" class="img1" align="middle" src="../images/separator.gif" />
+
+                <li class="nav-top-item">
+                    <a href="../help.html" class="link">Help</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="nav-search">
+        <div class="w">
+            <a href="/catalog/index" class="link logo">JPetStore</a>
+            <form class="search-content" action="/catalog/searchProducts" method="post">
+                <input id="keyword"  name="keyword"  type="text" class="search-input" placeholder="Please enter the name of the product">
+                <button class="btn search-btn">Search</button>
+            </form>
+            <div id="productAutoComplete">
+                <ul id="productAutoList">
+                    <%--<li class="productAutoItem">Amazon Parrot</li>
+                    <li class="productAutoItem">Labrador Retriever</li>
+                    <li class="productAutoItem">Rattlesnake</li>
+                    <li class="productAutoItem">Chihuahua</li>
+                    <li class="productAutoItem">Tiger Shark</li>--%>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="crumb">
+        <div id="QuickLinks">
+            <a href="/catalog/viewCategory?categoryId=FISH"><img src="../images/sm_fish.gif" /></a>
+            <img class="img1" src="../images/separator.gif" />
+            <a href="/catalog/viewCategory?categoryId=DOGS"><img src="../images/sm_dogs.gif" /></a>
+            <img class="img1" src="../images/separator.gif" />
+            <a href="/catalog/viewCategory?categoryId=REPTILES"><img src="../images/sm_reptiles.gif" /></a>
+            <img class="img1" src="../images/separator.gif" />
+            <a href="/catalog/viewCategory?categoryId=CATS"><img src="../images/sm_cats.gif" /></a>
+            <img class="img1" src="../images/separator.gif" />
+            <a href="/catalog/viewCategory?categoryId=BIRDS"><img src="../images/sm_birds.gif" /></a>
+        </div>
+    </div>
+
+    </div>
+</header>
+</body>
+</html>
+
+
+
+

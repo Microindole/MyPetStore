@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员控制面板</title>
+    <link rel="stylesheet" type="text/css" href="../css/indexx.css">
+
+</head>
+<body>
+<div class="container">
+<header class="header-container">
+<h1>宠物商店管理系统</h1>
+
+<!-- Check if admin is not null before accessing its properties -->
+
+</header>
+    <p th:if="${admin != null}">欢迎, <span th:text="${admin.username}">管理员</span>!</p>
+    <p th:unless="${admin != null}">欢迎, 管理员!</p>
+<div class="links">
+    <a href="/account/accounts" class="btn">用户管理</a>
+    <a href="/admin/products/products" class="btn">商品管理</a>
+    <a href="/admin/order/orders" class="btn">订单管理</a>
+    <img src="/images/house.jpg">
+    <a href="/admin/logout" class="btn">退出登录</a>
+
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shipping Address</title>
+</head>
+<body>
+<header th:replace="common/top"></header>
+<div id="Catalog">
+    <form th:action="@{newOrder(shipAddressSubmitted=true)}" method="post">
+        <table id="register_table">
+            <tr>
+                <th colspan="2">Shipping Address</th>
+            </tr>
+
+            <tr>
+                <td>First name:</td>
+                <td>
+                    <input type="text" name="order.shipToFirstName" th:value="${loginAccount.firstName}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Last name:</td>
+                <td>
+                    <input type="text" name="order.shipToLastName" th:value="${loginAccount.lastName}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Address 1:</td>
+                <td>
+                    <input type="text" name="order.shipAddress1" size="40" th:value="${loginAccount.address1}">
+                </td>
+            </tr>
+            <tr>
+                <td>Address 2:</td>
+                <td>
+                    <input type="text" name="order.shipAddress2" size="40" th:value="${loginAccount.address2}">
+                </td>
+            </tr>
+            <tr>
+                <td>City:</td>
+                <td>
+                    <input type="text" name="order.shipCity" th:value="${loginAccount.city}">
+                </td>
+            </tr>
+            <tr>
+                <td>State:</td>
+                <td>
+                    <input type="text" name="order.shipState" size="4" th:value="${loginAccount.state}">
+                </td>
+            </tr>
+            <tr>
+                <td>Zip:</td>
+                <td>
+                    <input type="text" name="order.shipZip" size="10" th:value="${loginAccount.zip}">
+                </td>
+            </tr>
+            <tr>
+                <td>Country:</td>
+                <td>
+                    <input type="text" name="order.shipCountry" size="15" th:value="${loginAccount.country}">
+                </td>
+            </tr>
+
+        </table>
+        <br/>
+
+        <input type="submit" name="newOrder" value="Continue" />
+
+    </form>
+</div>
+<footer th:replace="common/bottom"></footer>
+</body>
+</html>

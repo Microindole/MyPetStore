@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MyPetStore</title>
+</head>
+<body>
+<header th:replace="common/top"></header>
+<div id="Content">
+    <div id="BackLink">
+        <a href="/catalog/index">Return to Main Menu</a>
+    </div>
+
+    <div id="Catalog">
+
+        <table id="register_table">
+            <tr>
+                <th>&nbsp;</th>
+                <th>Product ID</th>
+                <th>Name</th>
+            </tr>
+
+<!--            <tr th:each="product:${category.productList}">-->
+<!--                <td>-->
+<!--                    <a th:href="@{/catalog/viewProduct?productId=}+${product.productId}">-->
+<!--                        <img th:src="'../'+${item.descriptionImage}">-->
+<!--                        <label th:text="${item.descriptionText}"></label>-->
+<!--                    </a>-->
+<!--                </td>-->
+<!--                <td><b>-->
+<!--                    <a th:href="@{/catalog/viewProduct?productId=}+${product.productId}" th:text="${product.productId}"><font color="BLACK"></font></a>-->
+<!--                </b>-->
+<!--                </td>-->
+<!--                <td th:text="${product.name}">product.name</td>-->
+<!--            </tr>-->
+
+            <tr th:each="search:${searchList}">
+                <td>
+                    <a th:href="@{/catalog/viewProduct?productId=}+${search.searchId}">
+                        <img th:src="'../'+${search.descriptionImage}">
+                        <label th:text="${search.descriptionText}"></label>
+                    </a>
+                </td>
+                <td><b>
+                    <a th:href="@{/catalog/viewProduct?productId=}+${search.searchId}" th:text="${search.searchId}"><font color="BLACK"></font></a>
+                </b>
+                </td>
+                <td th:text="${search.searchName}">Product Name</td>
+            </tr>
+
+            <tr>
+                <td></td>
+            </tr>
+
+        </table>
+
+    </div>
+</div>
+<footer th:replace="common/bottom"></footer>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MyPetStore</title>
+</head>
+<body>
+<div th:replace="~{common/top}"></div>
+
+<div id="Content">
+    <div id="Welcome">
+        <div id="WelcomeContent">
+            <!-- 显示登录用户的firstName -->
+        </div>
+    </div>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <div id="Main">
+        <div id="Sidebar">
+            <div id="SidebarContent">
+                <a href="/catalog/viewCategory?categoryId=FISH"><img src="../images/fish_icon.gif" /></a><br />
+                Saltwater, Freshwater <br />
+                <a href="/catalog/viewCategory?categoryId=DOGS"><img src="../images/dogs_icon.gif" /></a><br />
+                Various Breeds <br />
+                <a href="/catalog/viewCategory?categoryId=CATS"><img src="../images/cats_icon.gif" /></a><br />
+                Various Breeds, Exotic Varieties <br />
+                <a href="/catalog/viewCategory?categoryId=REPTILES"><img src="../images/reptiles_icon.gif" /></a><br />
+                Lizards, Turtles, Snakes <br />
+                <a href="/catalog/viewCategory?categoryId=BIRDS"><img src="../images/birds_icon.gif" /></a><br />
+                Exotic Varieties
+            </div>
+        </div>
+
+        <div id="MainImage">
+            <div id="MainImageContent">
+                <map name="estoremap">
+                    <area alt="Birds" coords="72,2,280,250"
+                          href="/catalog/viewCategory?categoryId=BIRDS" shape="RECT"
+                          onmouseover="showInform(alt);" onmouseout="hiddenInform(event)"/>
+                    <area alt="Fish" coords="2,180,72,250"
+                          href="/catalog/viewCategory?categoryId=FISH" shape="RECT"
+                          onmouseover="showInform(alt);" onmouseout="hiddenInform(event)"/>
+                    <area alt="Dogs" coords="60,250,130,320"
+                          href="/catalog/viewCategory?categoryId=DOGS" shape="RECT"
+                          onmouseover="showInform(alt);" onmouseout="hiddenInform(event)"/>
+                    <area alt="Reptiles" coords="140,270,210,340"
+                          href="/catalog/viewCategory?categoryId=REPTILES" shape="RECT"
+                          onmouseover="showInform(alt);" onmouseout="hiddenInform(event)"/>
+                    <area alt="Cats" coords="225,240,295,310"
+                          href="/catalog/viewCategory?categoryId=CATS" shape="RECT"
+                          onmouseover="showInform(alt);" onmouseout="hiddenInform(event)"/>
+                    <area alt="Birds" coords="280,180,350,250"
+                          href="/catalog/viewCategory?categoryId=BIRDS" shape="RECT"
+                          onmouseover="showInform(alt);" onmouseout="hiddenInform(event)"/>
+                </map>
+                <img class="img2" height="355" src="../images/splash.gif" align="middle"
+                     usemap="#estoremap" width="350" /></div>
+        </div>
+        <script src="../js/showCategory.js"></script>
+        <div id="inform" class="inform" style="display: none" ></div>
+        <div id="Separator">&nbsp;</div>
+    </div>
+</div>
+
+<div th:replace="~{common/bottom}"></div>
+</body>
+</html>

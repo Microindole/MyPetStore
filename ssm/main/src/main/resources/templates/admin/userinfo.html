@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <link rel="stylesheet" type="text/css" href="../css/userinfo.css">
+</head>
+<body>
+<div class="container">
+    <form th:action="@{/account/accounts}" method="get">
+        <div class="search-bar">
+            <input type="text" name="username"
+                   placeholder="输入用户名搜索..."
+                   th:value="${searchUsername}"
+                   class="form-control">
+            <button type="submit" class="btn btn-warning">搜索</button>
+            <a th:href="@{/admin/index}" class="btn btn-primary">返回主页</a>
+        </div>
+    </form>
+    <table>
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>用户名</th>
+        <th>邮箱</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="account, stat : ${accounts}">
+        <td th:text="${stat.count}"></td> <!-- 序号列 -->
+        <td th:text="${account.username}"></td>
+        <td th:text="${account.email}"></td>
+        <td>
+            <!-- 查看按钮 -->
+            <a th:href="@{/account/{id}(id=${account.username})}" class="btn btn-primary">查看</a>
+            <!-- 编辑按钮 -->
+            <a th:href="@{/account/edits/{id}(id=${account.username})}" class="btn btn-warning">编辑</a>
+        </td>
+    </tr>
+    </tbody>
+
+
+</table>
+</div>
+</body>
+</html>

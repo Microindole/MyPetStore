@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>管理员登录</title>
+    <link rel="stylesheet" type="text/css" href="../css/admin_login.css">
+</head>
+<body>
+<script type="text/javascript" src="../js/admin_login.js"></script>
+<section>
+    <div class="box">
+        <div class="square" style="--i:0;"></div>
+        <div class="square" style="--i:1;"></div>
+        <div class="square" style="--i:2;"></div>
+        <div class="square" style="--i:3;"></div>
+        <div class="square" style="--i:4;"></div>
+        <div class="square" style="--i:5;"></div>
+
+        <div class="container">
+            <div class="form">
+                <h2>管理员登录</h2>
+                <form th:action="@{getadmin}" method="post">
+                    <div class="inputBox">
+                        <input type="text" name="username" required>
+                        <span>用户名:</span>
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="inputBox password">
+                        <input id="password-input" type="password" name="password" required>
+                        <span>密码:</span>
+                        <a href="#" class="password-control" onclick="return show_hide_password(this);"></a>
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <label class="remember"><input type="checkbox">记住此密码 </label>
+                    <div class="inputBox">
+                        <input type="submit" value="登录" required>
+                    </div>
+                </form>
+                <div class="error-message" th:text="${session.error}" style="color: white;"></div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Details</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script th:src="@{/js/Order.js}"></script>
+</head>
+<body>
+<div th:replace="~{common/top}"></div>
+<form action="/order/confirmOrder" method="post" th:object="${order}">
+<div id="tab-container">
+  <ul class="tabs">
+    <li data-tab="tab-payment" class="active">Payment Details</li>
+    <li data-tab="tab-shipping">Shipping Address</li>
+  </ul>
+  <div id="tab-content">
+    <div id="tab-payment" class="tab active">
+
+
+        <table id="register_table">
+          <tr>
+            <th colspan=2>Payment Details</th>
+          </tr>
+          <tr>
+            <td>Card Type:</td>
+            <td>
+              <select name="cardType" th:field="*{cardType}">
+                <option value="Visa">Visa</option>
+                <option value="wechat">wechat</option>
+                <option value="alipay">alipay</option>
+                <option value="others">others</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>Card Number:</td>
+            <td>
+              <input type="text" name="creditCard" th:field="*{creditCard}"/>
+            </td>
+          </tr>
+          <tr>
+            <td>Expiry Date (MM/YYYY):</td>
+            <td>
+              <input type="text" name="expiryDate" th:field="*{expiryDate}"/>
+            </td>
+          </tr>
+          <tr>
+            <th colspan=2>Billing Address</th>
+          </tr>
+
+          <tr>
+            <td>First name:</td>
+            <td>
+              <input type="text" name="billToFirstName" th:field="*{billToFirstname}" th:value="${loginAccount.firstName}"/>
+            </td>
+          </tr>
+          <tr>
+            <td>Last name:</td>
+            <td>
+              <input type="text" name="billToLastName" th:field="*{billToLastname}" th:value="${loginAccount.lastName}"/>
+            </td>
+          </tr>
+          <tr>
+            <td>Address 1:</td>
+            <td>
+              <input type="text" size="40" name="billAddress1" th:field="*{billAddr1}" th:value="${loginAccount.address1}"/>
+            </td>
+          </tr>
+          <tr>
+            <td>Address 2:</td>
+            <td>
+              <input type="text" size="40" name="billAddress2" th:field="*{billAddr2}" th:value="${loginAccount.address2}"/>
+            </td>
+          </tr>
+          <tr>
+            <td>City:</td>
+            <td><input type="text" name="billCity" th:field="*{billCity}" th:value="${loginAccount.city}"/></td>
+          </tr>
+          <tr>
+            <td>State:</td>
+            <td>
+              <input type="text" size="40" name="billState" th:field="*{billState}" th:value="${loginAccount.state}"/>
+            </td>
+          </tr>
+          <tr>
+            <td>Zip:</td>
+            <td>
+              <input type="text" size="40" name="billZip" th:field="*{billZip}" th:value="${loginAccount.zip}"/>
+            </td>
+          </tr>
+          <tr>
+            <td>Country:</td>
+            <td>
+              <input type="text" size="40" name="billCountry" th:field="*{billCountry}" th:value="${loginAccount.country}"/>
+            </td>
+          </tr>
+
+         <tr>
+          <td colspan=2>
+            Ship to different address...
+            <input type="checkbox" name="shippingAddressRequired" />
+
+          </td>
+        </tr>
+
+          <tr>
+            <td colspan="2">
+              <input type="submit" name="newOrder" value="Continue" id="newOrder1" />
+              <a href="javascript:history.back()" class="Button">Close</a>
+            </td>
+
+          </tr>
+
+        </table>
+
+    </div>
+
+    <div id="tab-shipping" class="tab">
+      <table  id="register_table">
+          <tr>
+            <th colspan="2">Shipping Address</th>
+          </tr>
+
+          <tr>
+            <td>First name:</td>
+            <td>
+              <input type="text" name="shipToFirstName" th:field="*{shipToFirstname}" th:value="${loginAccount.firstName}"/>
+            </td>
+          </tr>
+          <tr>
+            <td>Last name:</td>
+            <td>
+              <input type="text" name="shipToLastName" th:field="*{shipToLastname}" th:value="${loginAccount.lastName}"/>
+            </td>
+          </tr>
+          <tr>
+            <td>Address 1:</td>
+            <td>
+              <input type="text" name="shipAddress1" size="40" th:field="*{shipAddr1}" th:value="${loginAccount.address1}"/>
+            </td>
+          </tr>
+          <tr>
+            <td>Address 2:</td>
+            <td>
+              <input type="text" name="shipAddress2" size="40" th:field="*{shipAddr2}" th:value="${loginAccount.address2}"/>
+            </td>
+          </tr>
+          <tr>
+            <td>City:</td>
+            <td>
+              <input type="text" name="shipCity" th:field="*{shipCity}" th:value="${loginAccount.city}"/>
+            </td>
+          </tr>
+          <tr>
+            <td>State:</td>
+            <td>
+              <input type="text" name="shipState" size="4" th:field="*{shipState}" th:value="${loginAccount.state}"/>
+            </td>
+          </tr>
+          <tr>
+            <td>Zip:</td>
+            <td>
+              <input type="text" name="shipZip" size="10" th:field="*{shipZip}" th:value="${loginAccount.zip}"/>
+            </td>
+          </tr>
+          <tr>
+            <td>Country:</td>
+            <td>
+              <input type="text" name="shipCountry" size="15" th:field="*{shipCountry}" th:value="${loginAccount.country}">
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="2">
+              <input type="submit" name="newOrder" value="Continue" id="newOrder2" />
+            </td>
+          </tr>
+        </table>
+
+    </div>
+
+  </div>
+</div>
+</form>
+<div th:replace="~{common/bottom}"></div>
+</body>
+</html>

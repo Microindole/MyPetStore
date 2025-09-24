@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>编辑</title>
+  <link rel="Stylesheet" type="text/css" href="/css/useredit.css">
+</head>
+<body>
+<div>
+  <h2>编辑用户</h2>
+  <form th:action="@{/account/edits}" method="post" th:object="${account}">
+    <input type="hidden" />
+    <div>
+      <label>用户名:</label>
+      <span th:text="${account.username}"></span>
+      <input hidden="hidden" type="text" th:field="*{username}" />
+    </div>
+    <div>
+      <label>邮箱:</label>
+      <input type="email" th:field="*{email}" required />
+    </div>
+    <div>
+      <label>名：</label>
+      <input type="text" th:field="*{firstName}" required />
+    </div>
+    <div>
+      <label>姓:</label>
+      <input type="text" th:field="*{lastName}" required />
+    </div>
+    <div>
+      <label>身份:</label>
+      <input type="text" th:field="*{status}" required />
+    </div>
+    <div>
+      <label>地址1:</label>
+      <input type="text" th:field="*{address1}" required />
+    </div>
+    <div>
+      <label>地址2:</label>
+      <input type="text" th:field="*{address2}" required />
+    </div>
+    <div>
+      <label>城市:</label>
+      <input type="text" th:field="*{city}" required />
+    </div>
+    <div>
+      <label>州:</label>
+      <input type="text" th:field="*{state}" required />
+    </div>
+    <div>
+      <label>邮编:</label>
+      <input type="text" th:field="*{zip}" required />
+    </div>
+    <div>
+      <label>国家:</label>
+      <input type="text" th:field="*{country}" required />
+    </div>
+    <div>
+      <label>电话:</label>
+      <input type="text" th:field="*{phone}" required />
+    </div>
+    <!-- 其他字段... -->
+    <button type="submit" class="btn btn-success">保存</button>
+    <a th:href="@{/account/accounts}" class="btn btn-primary">返回用户信息</a>
+  </form>
+</div>
+</body>
+</html>

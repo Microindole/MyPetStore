@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MyPetStore</title>
+</head>
+<body>
+<header th:replace="common/top"></header>
+
+<script>
+    function refreshKaptcha() {
+        const KaptchaImg = document.getElementById('code_img');
+        KaptchaImg.src = "/captcha?t=" + new Date().getTime();
+    }
+</script>
+<div id="Content">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <div id="Catalog">
+        <form action="/account/edit" method="post" th:object="${userinfo}">
+            <h3>User Information</h3>
+            <div th:if="${loginMsg!=null}">
+                <p class="error-msg" th:text="${loginMsg}"></p>
+            </div>
+            <table id="vertify">
+                <tr>
+                    <td>User ID:</td>
+                    <td th:text="*{username}">
+                        <input id="username" type="text" th:field="*{username}" >
+                    </td>
+                </tr>
+                <tr>
+                    <td>New password:</td>
+                    <td><input id="newpassword" type="password" th:field="*{password}"></td>
+                </tr>
+            </table>
+            <script th:src="@{/js/NameIsExist.js}"></script>
+            <script th:src="@{/js/RepeatedPassword.js}"></script>
+            <div id="middle">
+                <h3>Account Information</h3>
+                <table id="register_table">
+                    <tr>
+                        <td>First name:</td>
+                        <td><input type="text" th:field="*{firstName}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Last name:</td>
+                        <td><input type="text" th:field="*{lastName}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td><input type="text" size="40" th:field="*{email}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Phone:</td>
+                        <td><input type="text" th:field="*{phone}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Address 1:</td>
+                        <td><input type="text" th:field="*{address1}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Address 2:</td>
+                        <td><input type="text" th:field="*{address2}" /></td>
+                    </tr>
+                    <tr>
+                        <td>City:</td>
+                        <td><input type="text" th:field="*{city}" /></td>
+                    </tr>
+                    <tr>
+                        <td>State:</td>
+                        <td><input type="text" th:field="*{state}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Zip:</td>
+                        <td><input type="text" th:field="*{zip}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Country:</td>
+                        <td><input type="text" th:field="*{country}" /></td>
+                    </tr>
+                </table>
+                <h3>Profile Information</h3>
+                <table id="register_table">
+                    <tr>
+                        <td>Language Preference:</td>
+                        <td>
+                            <select th:field="*{langPref}">
+                                <option value="english">English</option>
+                                <option value="spanish">Spanish</option>
+                                <option value="french">French</option>
+                                <option value="chinese">Chinese</option>
+                                <option value="japanese">Japanese</option>
+                                <option value="korean">Korean</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Favourite Category:</td>
+                        <td>
+                            <select th:field="*{favoriteGory}">
+                                <option value="BIRDS">birds</option>
+                                <option value="DOGS">dogs</option>
+                                <option value="CATS">cats</option>
+                                <option value="FISH">fish</option>
+                                <option value="REPTILES">reptiles</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Enable MyList</td>
+                        <td>
+                            <input type="checkbox" th:field="*{myListOpt}" value="true"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Enable MyBanner</td>
+                        <td>
+                            <input type="checkbox" th:field="*{bannerOpt}" value="true"/>
+                            <!--                    <input type="checkbox"/>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img id="code_img" th:src="@{'/captcha'}" alt="图片未加载"
+                                 width="150" height="30" onclick="refreshKaptcha()" style="cursor: pointer;">
+                        </td>
+                        <td>
+                            <input type="text" placeholder="请输入验证码:" name="code">
+                        </td>
+                    </tr>
+                </table>
+            <!--      <p th:if="${session != null and session.registerMsg != null}">-->
+            <!--        <font color="red" th:text="${session.registerMsg}"></font>-->
+            <!--      </p>-->
+            <!--      <p th:if="${request != null and request.registerMsg != null}">-->
+            <!--        <font color="#a52a2a" th:text="${request.registerMsg}"></font>-->
+            <!--      </p>-->
+            <input type="submit" value="save">
+        </form>
+    </div>
+</div>
+<footer th:replace="common/bottom"></footer>
+</body>
+</html>

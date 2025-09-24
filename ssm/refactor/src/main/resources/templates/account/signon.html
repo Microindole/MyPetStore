@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MyPetStore</title>
+</head>
+<style>
+    #test{
+        margin: auto;
+    }
+</style>
+<body>
+<div th:replace="~{common/top}"></div>
+<script>
+    function refreshKaptcha() {
+        const KaptchaImg = document.getElementById('code_img');
+        // KaptchaImg.src = '<%= request.getContextPath() %>/mykaptcha.jpg?t=' + new Date().getTime();
+
+        KaptchaImg.src = "/captcha?t=" + new Date().getTime();
+    }
+</script>
+<div id="Content">
+    <div id="Catalog" class="page-wrapper">
+        <div class="wpo-login-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form class="wpo-accountWrapper" action="/account/signon" method="POST">
+                            <div class="wpo-accountInfo">
+                                <div class="wpo-accountInfoHeader">
+                                    <a class="wpo-accountBtn" href="/account/newAccountForm">
+                                        <span class="">Register Now!</span>
+                                    </a>
+                                </div>
+                                <div class="back-home">
+                                    <a class="wpo-accountBtn" href="/catalog/index">
+                                        <span class="">Back To Home</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="wpo-accountForm form-style">
+                                <div class="fromTitle">
+                                    <h2>Login</h2>
+                                    <p>Sign into your pages account</p>
+                                </div>
+                                <div th:if="${loginMsg!=null}">
+                                    <p class="error-msg" th:text="${loginMsg}"></p>
+                                </div>
+                                <div class="row">
+                                    <table id="register_table">
+                                        <div class="col-lg-12 col-md-12 col-12">
+                                            <label>Username:</label>
+                                            <input type="text" name="username" id="username"><br />
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-12">
+                                            <div class="form-group">
+                                                <label>Password:</label>
+                                                <input class="pwd6" type="password" name="password" id="password"><br />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-12">
+                                            <label>VerifyCode:</label>
+                                            <input type="text" placeholder="请输入验证码:" name="code">
+                                            <img id="code_img" th:src="@{'/captcha'}" alt="图片未加载"
+                                                 width="20" height="65" onclick="refreshKaptcha()" style="width:35%;float:left;">
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-12 col-12">
+                                            <input class="wpo-accountBtn" type="submit" name="signon" value="Login"/>
+                                        </div>
+                                    </table>
+                                </div>
+                                <p class="subText">Need a user name and password?<a href="/account/newAccountForm">Register Now!</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{common/bottom}"></div>
+</body>
+</html>
+
+<!--    <div id="test">-->
+<!--        <div th:if="${loginMsg!=null}">-->
+<!--            <p class="error-msg" th:text="${loginMsg}"></p>-->
+<!--        </div>-->
+<!--        <form action="/account/signon" method="post">-->
+<!--            <input type="text" name="username" placeholder="username" ><br>-->
+<!--            <input type="password" name="password" placeholder="password" ><br>-->
+<!--            <img th:src="@{'/captcha'}" alt="验证码" />-->
+<!--            <input type="submit" value="Login">-->
+<!--        </form>-->
+
+<!--        Don't have account?-->
+<!--        <a href="#">Register Now!</a>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<!--<header th:replace="common/top"></header>-->
+
+
+<!--    <div id="test">-->
+<!--        <form action="/catalog/main" method="post">-->
+<!--            <input type="text" name="username" placeholder="username" ><br>-->
+<!--            <input type="password" name="password" placeholder="password" ><br>-->
+<!--            <input type="submit" value="Login">-->
+<!--        </form>-->
+
+<!--        Don't have account?-->
+<!--        <a href="#">Register Now!</a>-->
+<!--    </div>-->
+
+
+<!--         start preloader-->
+<!--                <%&#45;&#45;    <div class="preloader">&#45;&#45;%>-->
+<!--                <%&#45;&#45;      <div class="vertical-centered-box">&#45;&#45;%>-->
+<!--                    <%&#45;&#45;          <div class="content">&#45;&#45;%>-->
+<!--                        <%&#45;&#45;              <div class="loader-circle"></div>&#45;&#45;%>-->
+<!--                        <%&#45;&#45;              <div class="loader-line-mask">&#45;&#45;%>-->
+<!--                            <%&#45;&#45;                  <div class="loader-line"></div>&#45;&#45;%>-->
+<!--                            <%&#45;&#45;              </div>&#45;&#45;%>-->
+<!--                                   <img th:src="images/best/preloader.png" alt="">-->
+<!--                        <%&#45;&#45;          </div>&#45;&#45;%>-->
+<!--                    <%&#45;&#45;      </div>&#45;&#45;%>-->
+<!--                <%&#45;&#45;    </div>&#45;&#45;%>-->
+<!--         end preloader-->
+
+<!--    <script>-->
+<!--        function refreshKaptcha() {-->
+<!--            const KaptchaImg = document.getElementById('code_img');-->
+<!--            KaptchaImg.src = '<%= request.getContextPath() %>/mykaptcha.jpg?t=' + new Date().getTime();-->
+<!--        }-->
+<!--    </script>-->
+
+<!--    <div id="Catalog" class="page-wrapper">-->
+
+<!--        &lt;!&ndash; start preloader &ndash;&gt;-->
+<!--        <%&#45;&#45;    <div class="preloader">&#45;&#45;%>-->
+<!--        <%&#45;&#45;      <div class="vertical-centered-box">&#45;&#45;%>-->
+<!--            <%&#45;&#45;          <div class="content">&#45;&#45;%>-->
+<!--                <%&#45;&#45;              <div class="loader-circle"></div>&#45;&#45;%>-->
+<!--                <%&#45;&#45;              <div class="loader-line-mask">&#45;&#45;%>-->
+<!--                    <%&#45;&#45;                  <div class="loader-line"></div>&#45;&#45;%>-->
+<!--                    <%&#45;&#45;              </div>&#45;&#45;%>-->
+<!--                <%&#45;&#45;              <img src="../images/best/preloader.png" alt="">&#45;&#45;%>-->
+<!--                <%&#45;&#45;          </div>&#45;&#45;%>-->
+<!--            <%&#45;&#45;      </div>&#45;&#45;%>-->
+<!--        <%&#45;&#45;    </div>&#45;&#45;%>-->
+<!--        &lt;!&ndash; end preloader &ndash;&gt;-->
+
+<!--        <div class="wpo-login-area">-->
+<!--            <div class="container">-->
+<!--                <div class="row">-->
+<!--                    <div class="col-lg-12">-->
+<!--                        <form class="wpo-accountWrapper" action="/account/signonForm" method="post">-->
+<!--                            <div class="wpo-accountInfo">-->
+<!--                                <div class="wpo-accountInfoHeader">-->
+<!--                                    <a href="/catalog/viewCategory"><img src="../images/best/logo-2.png" alt=""></a>-->
+<!--                                    <a class="wpo-accountBtn" href="newAccountForm">-->
+<!--                                        <span class="">Register Now!</span>-->
+<!--                                    </a>-->
+<!--                                </div>-->
+
+<!--                                <div class="image">-->
+<!--                                    <img src="../images/login.png" alt="错误">-->
+<!--                                </div>-->
+
+<!--                                <div class="back-home">-->
+<!--                                    <a class="wpo-accountBtn" href="/catalog/viewCategory">-->
+<!--                                        <span class="">Back To Home</span>-->
+<!--                                    </a>-->
+<!--                                </div>-->
+
+<!--                            </div>-->
+
+<!--                            <div class="wpo-accountForm form-style">-->
+
+<!--                                <div class="fromTitle">-->
+<!--                                    <h2>Login</h2>-->
+<!--                                    <p>Sign into your pages account</p>-->
+<!--                                </div>-->
+
+<!--                                <div class="row">-->
+<!--                                    <table id="register_table">-->
+<!--                                        <div class="col-lg-12 col-md-12 col-12">-->
+<!--                                            <label>Username:</label>-->
+<!--                                            <input type="text" name="username"><br />-->
+<!--                                        </div>-->
+<!--                                        <div class="col-lg-12 col-md-12 col-12">-->
+<!--                                            <div class="form-group">-->
+<!--                                                <label>Password:</label>-->
+<!--                                                <input class="pwd6" type="password" name="password"><br />-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div >-->
+<!--                                            <img id="code_img" src="<%= request.getContextPath() %>/mykaptcha.jpg" alt="图片未加载"-->
+<!--                                                 width="20" height="65" onclick="refreshKaptcha()" style="width:35%;float:left;">-->
+<!--                                            <input type="text" placeholder="请输入验证码:" name="code" style="width:65%;float:right;">-->
+<!--                                        </div>-->
+<!--                                        <div class="col-lg-12 col-md-12 col-12">-->
+<!--                                            <input class="wpo-accountBtn" type="submit" name="signon" value="Login"/>-->
+<!--                                        </div>-->
+
+
+<!--                                        <%&#45;&#45;                      <img  id="code_img" src="<%= request.getContextPath() %>/mykaptcha.jpg"  alt="图片未加载"width="90" onclick="refreshKaptcha()" style="cursor: pointer;" >&#45;&#45;%>-->
+<!--                                        <%&#45;&#45;                      <input  type="text" placeholder="请输入验证码:" name="code">&#45;&#45;%>-->
+<!--                                    </table>-->
+<!--                                </div>-->
+<!--                                <p class="subText">Need a user name and password?<a href="newAccountForm">Register Now!</a></p>-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <%&#45;&#45;</div>&#45;&#45;%>-->
+
+
+<!--    <%&#45;&#45;    <input type="submit" name="signon" value="Login"/>&#45;&#45;%>-->
+<!--    <%&#45;&#45;    <br><br><font color="#a52a2a">${requestScope.signOnMsg}</font><br>&#45;&#45;%>-->
+<!--    <%&#45;&#45;  </form>&#45;&#45;%>-->
+<!--    <%&#45;&#45;  Need a user name and password?&#45;&#45;%>-->
+<!--    <%&#45;&#45;  <a href="newAccountForm">Register Now!</a>&#45;&#45;%>-->
+

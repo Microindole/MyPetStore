@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品表单</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background-color: #4CAF50;
+        }
+        .btn-secondary {
+            background-color: #607d8b;
+        }
+        .form-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .image-preview {
+            max-width: 300px;
+            margin-top: 10px;
+        }
+        .current-image {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .current-image img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${product.productId} ? '编辑商品' : '添加新商品'"></h1>
+
+    <form th:action="@{/admin/products/products}" method="post" th:object="${product}" enctype="multipart/form-data">
+        <!-- Hidden field for ID when editing -->
+        <input type="hidden" th:field="*{productId}" />
+
+        <div class="form-group">
+            <label for="categoryId">所属类别:</label>
+            <select id="categoryId" th:field="*{categoryId}" required>
+                <option value="">-- 选择类别 --</option>
+                <option th:each="category : ${categories}"
+                        th:value="${category.categoryId}"
+                        th:text="${category.name}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="name">商品名称:</label>
+            <input type="text" id="name" th:field="*{name}" required />
+        </div>
+
+        <div class="form-group">
+            <label for="productImage">商品图片:</label>
+            <input type="file" id="productImage" name="productImage" accept="image/*" />
+
+            <!-- Show current image if editing -->
+            <div class="current-image" th:if="${imageUrl}">
+                <p>当前图片:</p>
+                <img th:src="${imageUrl}" alt="当前商品图片" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="descriptionText">商品描述:</label>
+            <textarea id="descriptionText" name="descriptionText" th:text="${descriptionText}"></textarea>
+        </div>
+
+        <div class="form-actions">
+            <a th:href="@{/admin/products/products}" class="btn btn-secondary">取消</a>
+            <button type="submit" class="btn btn-primary">保存</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MyPetStore</title>
+</head>
+<body>
+<header th:replace="common/top"></header>
+<div id="Content">
+    <p th:text="${session.errorMsg}"></p>
+</div>
+<footer th:replace="common/bottom"></footer>
+</body>
+</html>

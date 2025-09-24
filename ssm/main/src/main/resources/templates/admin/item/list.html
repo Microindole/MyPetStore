@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品项管理</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .btn {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 2px;
+            text-decoration: none;
+            border-radius: 3px;
+            cursor: pointer;
+            color: white;
+        }
+        .btn-primary {
+            background-color: #4CAF50;
+        }
+        .btn-warning {
+            background-color: #ff9800;
+        }
+        .btn-danger {
+            background-color: #f44336;
+        }
+        .btn-info {
+            background-color: #2196F3;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        .header-actions {
+            margin-bottom: 20px;
+        }
+        .inventory-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            color: white;
+        }
+        .in-stock {
+            background-color: #4CAF50;
+        }
+        .low-stock {
+            background-color: #ff9800;
+        }
+        .out-of-stock {
+            background-color: #f44336;
+        }
+        .price {
+            font-weight: bold;
+            color: #333;
+        }
+        .quick-update {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .inventory-form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .inventory-form input {
+            padding: 5px;
+            width: 70px;
+        }
+        .inventory-form button {
+            padding: 5px 10px;
+        }
+    </style>
+    <script>
+        function toggleInventoryForm(itemId) {
+            const form = document.getElementById('inventory-form-' + itemId);
+            if (form.style.display === 'none' || form.style.display === '') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <h1>商品项管理</h1>
+
+    <div class="header-actions">
+        <a th:href="@{/admin/products/items/new}" class="btn btn-primary">添加新商品项</a>
+        <a th:href="@{/admin/products/categories}" class="btn btn-primary">类别管理</a>
+        <a th:href="@{/admin/products/products}" class="btn btn-primary">商品管理</a>
+        <a th:href="@{/admin/index}" class="btn btn-primary">返回主页</a>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>商品项ID</th>
+            <th>商品名称</th>
+            <th>类别</th>
+            <th>属性</th>
+            <th>价格</th>
+            <th>库存</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="itemVO : ${items}">
+            <td th:text="${itemVO.item.itemId}"></td>
+            <td th:text="${itemVO.product.name}"></td>
+            <td th:text="${itemVO.category != null ? itemVO.category.name : '未分类'}"></td>
+            <td th:text="${itemVO.item.attribute1}"></td>
+            <td class="price" th:text="${'¥' + itemVO.item.listPrice}"></td>
+            <td>
+                        <span th:class="${itemVO.quantity > 10 ? 'inventory-badge in-stock' :
+                                          (itemVO.quantity > 0 ? 'inventory-badge low-stock' :
+                                           'inventory-badge out-of-stock')}"
+                              th:text="${itemVO.quantity > 0 ? itemVO.quantity + ' 件' : '缺货'}">
+                        </span>
+                <!-- Fix: Using data attributes instead of directly in onclick -->
+                <button class="btn btn-info btn-sm"
+                        th:data-item-id="${itemVO.item.itemId}"
+                        onclick="toggleInventoryForm(this.getAttribute('data-item-id'))">
+                    更新库存
+                </button>
+                <div class="quick-update" th:id="'inventory-form-' + ${itemVO.item.itemId}">
+                    <form th:action="@{/admin/products/items/inventory}" method="post" class="inventory-form">
+                        <input type="hidden" name="itemId" th:value="${itemVO.item.itemId}" />
+                        <input type="number" name="quantity" th:value="${itemVO.quantity}" min="0" required />
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </form>
+                </div>
+            </td>
+            <td class="action-buttons">
+                <a th:href="@{/admin/products/items/edit/{id}(id=${itemVO.item.itemId})}" class="btn btn-warning">编辑</a>
+                <a th:href="@{/admin/products/items/delete/{id}(id=${itemVO.item.itemId})}"
+                   class="btn btn-danger"
+                   onclick="return confirm('确定要删除此商品项吗?')">删除</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

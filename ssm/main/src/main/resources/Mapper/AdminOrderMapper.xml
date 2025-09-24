@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.csu.petstore.persistence.AdminOrderMapper">
+
+    <select id="getOrder" parameterType="int" resultType="Order" >
+        select
+            BILLADDR1 AS billAddress1,
+            BILLADDR2 AS billAddress2,
+            BILLCITY,
+            BILLCOUNTRY,
+            BILLSTATE,
+            BILLTOFIRSTNAME,
+            BILLTOLASTNAME,
+            BILLZIP,
+            SHIPADDR1 AS shipAddress1,
+            SHIPADDR2 AS shipAddress2,
+            SHIPCITY,
+            SHIPCOUNTRY,
+            SHIPSTATE,
+            SHIPTOFIRSTNAME,
+            SHIPTOLASTNAME,
+            SHIPZIP,
+            CARDTYPE,
+            COURIER,
+            CREDITCARD,
+            EXPRDATE AS expiryDate,
+            LOCALE,
+            ORDERDATE,
+            ORDERS.ORDERID,
+            TOTALPRICE,
+            USERID AS username,
+            STATUS
+        FROM ORDERS, ORDERSTATUS
+        WHERE ORDERS.ORDERID = #{value}
+          AND ORDERS.ORDERID = ORDERSTATUS.ORDERID
+    </select>
+
+    <select id="getOrdersByUsername" parameterType="String" resultType="Order">
+        SELECT
+            BILLADDR1 AS billAddress1,
+            BILLADDR2 AS billAddress2,
+            BILLCITY,
+            BILLCOUNTRY,
+            BILLSTATE,
+            BILLTOFIRSTNAME,
+            BILLTOLASTNAME,
+            BILLZIP,
+            SHIPADDR1 AS shipAddress1,
+            SHIPADDR2 AS shipAddress2,
+            SHIPCITY,
+            SHIPCOUNTRY,
+            SHIPSTATE,
+            SHIPTOFIRSTNAME,
+            SHIPTOLASTNAME,
+            SHIPZIP,
+            CARDTYPE,
+            COURIER,
+            CREDITCARD,
+            EXPRDATE AS expiryDate,
+            LOCALE,
+            ORDERDATE,
+            ORDERS.ORDERID,
+            TOTALPRICE,
+            USERID AS username,
+            STATUS
+        FROM ORDERS, ORDERSTATUS
+        WHERE ORDERS.USERID = #{value}
+          AND ORDERS.ORDERID = ORDERSTATUS.ORDERID
+        ORDER BY ORDERDATE
+    </select>
+
+    <select id="getOrderList" resultType="Order">
+        SELECT
+            BILLADDR1 AS billAddress1,
+            BILLADDR2 AS billAddress2,
+            BILLCITY,
+            BILLCOUNTRY,
+            BILLSTATE,
+            BILLTOFIRSTNAME,
+            BILLTOLASTNAME,
+            BILLZIP,
+            SHIPADDR1 AS shipAddress1,
+            SHIPADDR2 AS shipAddress2,
+            SHIPCITY,
+            SHIPCOUNTRY,
+            SHIPSTATE,
+            SHIPTOFIRSTNAME,
+            SHIPTOLASTNAME,
+            SHIPZIP,
+            CARDTYPE,
+            COURIER,
+            CREDITCARD,
+            EXPRDATE AS expiryDate,
+            LOCALE,
+            ORDERDATE,
+            ORDERS.ORDERID,
+            TOTALPRICE,
+            USERID,
+            STATUS AS outStatus
+        FROM ORDERS, ORDERSTATUS
+        WHERE ORDERS.ORDERID = ORDERSTATUS.ORDERID
+        ORDER BY ORDERDATE
+    </select>
+
+    <insert id="insertOrder" parameterType="Order">
+        INSERT INTO ORDERS (ORDERID, USERID, ORDERDATE, SHIPADDR1, SHIPADDR2, SHIPCITY, SHIPSTATE,
+                            SHIPZIP, SHIPCOUNTRY, BILLADDR1, BILLADDR2, BILLCITY, BILLSTATE, BILLZIP, BILLCOUNTRY,
+                            COURIER, TOTALPRICE, BILLTOFIRSTNAME, BILLTOLASTNAME, SHIPTOFIRSTNAME, SHIPTOLASTNAME,
+                            CREDITCARD, EXPRDATE, CARDTYPE, LOCALE)
+        VALUES(#{orderId}, #{username}, #{orderDate}, #{shipAddress1}, #{shipAddress2,jdbcType=VARCHAR}, #{shipCity},
+               #{shipState}, #{shipZip}, #{shipCountry}, #{billAddress1}, #{billAddress2,jdbcType=VARCHAR}, #{billCity},
+               #{billState}, #{billZip}, #{billCountry}, #{courier}, #{totalPrice}, #{billToFirstName}, #{billToLastName},
+               #{shipToFirstName}, #{shipToLastName}, #{creditCard}, #{expiryDate}, #{cardType}, #{locale})
+    </insert>
+
+    <insert id="insertOrderStatus" parameterType="Order">
+        INSERT INTO ORDERSTATUS
+            (ORDERID, LINENUM, TIMESTAMP, STATUS)
+        VALUES
+            (#{orderId,jdbcType=NUMERIC}, #{orderId,jdbcType=NUMERIC}, #{orderDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateOrderAddress" parameterType="Order">
+        update ORDERS set
+                          SHIPADDR1 = #{shipAddr1},
+                          SHIPADDR2 = #{shipAddr2},
+                          SHIPCITY = #{shipCity},
+                          SHIPCOUNTRY = #{shipCountry},
+                          SHIPSTATE = #{shipState},
+                          SHIPZIP = #{shipZip}
+        where ORDERID = #{orderId}
+    </update>
+
+    <update id="updateOrderStatus" parameterType="Order">
+        UPDATE ORDERSTATUS SET
+            STATUS = #{status,jdbcType=VARCHAR}
+        WHERE ORDERID = #{orderId,jdbcType=NUMERIC}
+    </update>
+
+    <delete id="deleteOrder" parameterType="int">
+        delete from ORDERS
+        where orderId = #{orderId}
+    </delete>
+
+    <delete id="deleteOrderStatus" parameterType="int">
+        delete from ORDERSTATUS
+        where orderId = #{orderId}
+    </delete>
+
+    <update id="updateOut" parameterType="int">
+        UPDATE ORDERS SET
+            BILLZIP = '1'
+        WHERE ORDERID = #{orderId}
+    </update>
+
+    <select id="getOrderNumber" resultType="int">
+        select count(*) from orders;
+    </select>
+
+    <select id="getUnSentNumber" resultType="int">
+        select count(*) from orders;
+    </select>
+
+    <select id="getTodayOrderNumber" parameterType="String" resultType="int">
+        select count(*) from orders where orderdate like #{day} ;
+    </select>
+
+    <select id="getAlreadyNumber" resultType="int">
+        select count(*) from orders;
+    </select>
+
+    <select id="getUnSentOrderList" resultType="Order">
+        SELECT
+            BILLADDR1 AS billAddress1,
+            BILLADDR2 AS billAddress2,
+            BILLCITY,
+            BILLCOUNTRY,
+            BILLSTATE,
+            BILLTOFIRSTNAME,
+            BILLTOLASTNAME,
+            BILLZIP,
+            SHIPADDR1 AS shipAddress1,
+            SHIPADDR2 AS shipAddress2,
+            SHIPCITY,
+            SHIPCOUNTRY,
+            SHIPSTATE,
+            SHIPTOFIRSTNAME,
+            SHIPTOLASTNAME,
+            SHIPZIP,
+            CARDTYPE,
+            COURIER,
+            CREDITCARD,
+            EXPRDATE AS expiryDate,
+            LOCALE,
+            ORDERDATE,
+            ORDERS.ORDERID,
+            TOTALPRICE,
+            USERID AS username,
+            STATUS
+        FROM ORDERS, ORDERSTATUS
+        WHERE ORDERS.ORDERID = ORDERSTATUS.ORDERID
+        ORDER BY ORDERDATE
+    </select>
+
+</mapper>

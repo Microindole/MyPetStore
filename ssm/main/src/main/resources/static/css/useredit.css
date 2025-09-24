@@ -1,0 +1,128 @@
+/* 全局样式 */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* 动态背景动画 */
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* 容器样式 */
+div {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* 标题样式 */
+h2 {
+    font-size: 2rem;
+    color: #ff6f61;
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* 表单样式 */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center; /* 表单内容居中 */
+}
+
+/* 输入框容器样式 */
+form div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 80%; /* 输入框容器宽度减少 */
+}
+
+/* 标签样式 */
+label {
+    font-size: 1.1rem;
+    color: #555;
+    font-weight: bold;
+}
+
+/* 输入框样式 */
+input[type="text"],
+input[type="email"] {
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* 输入框宽度占满容器 */
+    box-sizing: border-box; /* 包含 padding 和 border */
+    max-width: 400px; /* 限制输入框的最大宽度 */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus {
+    border-color: #6a11cb;
+    outline: none;
+    box-shadow: 0 0 10px rgba(106, 17, 203, 0.5);
+}
+
+/* 按钮样式 */
+button[type="submit"] {
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    width: 80%; /* 按钮宽度减少 */
+    max-width: 400px; /* 限制按钮的最大宽度 */
+    margin-top: 10px; /* 按钮与上方内容的间距 */
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

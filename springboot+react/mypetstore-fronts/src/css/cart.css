@@ -1,0 +1,141 @@
+/* 仅作用于 #Cart 的样式 */
+
+/* 整体布局 */
+#Cart {
+    margin: 20px auto;
+    max-width: 800px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    top: 50%;
+    left: 50%;
+    transform: translate(35%);
+}
+
+#Cart h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 表格样式 */
+#Cart #register_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#Cart #register_table th, #Cart #register_table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+#Cart #register_table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+#Cart #register_table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#Cart #register_table tr:hover {
+    background-color: #f1f1f1;
+}
+
+#Cart #register_table input[type="number"] {
+    width: 60px;
+    text-align: center;
+}
+
+/* 按钮样式 */
+#Cart .Button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#Cart .Button:hover {
+    background-color: #0056b3;
+}
+
+/* 美化 Remove 按钮 */
+#Cart button {
+    padding: 8px 12px;
+    background-color: #ff4d4f; /* 红色背景 */
+    color: #fff; /* 白色文字 */
+    border: none;
+    border-radius: 4px; /* 圆角 */
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease; /* 添加过渡效果 */
+}
+
+#Cart button:hover {
+    background-color: #d9363e; /* 鼠标悬停时的深红色 */
+}
+
+/* 小计样式 */
+#Cart #register_table td[colspan="6"] {
+    text-align: right;
+    font-weight: bold;
+}
+
+#Cart #register_table td[colspan="2"] {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.back-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+}
+
+/* 返回按钮样式 */
+.return-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.return-button:hover {
+    background-color: #0056b3;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+/* 当库存不足时，改变字体颜色为红色 */
+.out-of-stock {
+    color: red;
+    font-weight: bold;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Orders</title>
+</head>
+<body>
+<header th:replace="common/top"></header>
+<div id="BackLink">
+    <a th:href="@{/catalog/index}">Return to Main Menu</a>
+</div>
+
+<div id="Catalog">
+    <h2>My Orders</h2>
+
+    <table id="register_table">
+        <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>Total Price</th>
+        </tr>
+
+
+        <tr th:each="order : ${orderList}">
+            <td>
+                <a th:href="@{/viewOrder(orderId=${order.orderId})}" th:text="${order.orderId}"></a>
+            </td>
+            <td th:text="${order.orderDate}"></td>
+            <td th:text="${order.totalPrice}"></td>
+        </tr>
+    </table>
+
+    <div id="Separator">&nbsp;</div>
+</div>
+<footer th:replace="common/bottom"></footer>
+</body>
+</html>
